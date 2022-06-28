@@ -1,0 +1,20 @@
+.content {
+    margin: auto 100px;
+    float: left;
+}
+
+.button1 {
+    width:100px;
+    margin-left: 15px;
+    margin-bottom: 3px;
+}
+
+.nav {
+    line-height: 22px;
+    height: 100px;
+    background-color: white;
+}
+
+.navbold {
+    font-weight: 500;
+}
