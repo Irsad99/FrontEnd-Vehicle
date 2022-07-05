@@ -3,6 +3,7 @@ import style from "./header.module.css";
 import logo from "./logo.png";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { Link } from "../style_custom/Link_custom";
+import { useNavigate } from "react-router-dom";
 
 function header() {
   return (
@@ -24,12 +25,20 @@ function header() {
               <Link href="/vehicle">Vehicle Type</Link>
               <Link href="/history">History</Link>
               <Link href="/about">About</Link>
-                <Button variant="outline-warning" size="sm" className={style.button1}>
+              <Link href="/login">
+                <Button
+                  variant="outline-warning"
+                  size="sm"
+                  className={style.button1}
+                >
                   Login
                 </Button>{" "}
-                <Button variant="warning" size="sm" className={style.button1}>
-                  Register
-                </Button>{" "}
+              </Link>
+              <Link href="/register">
+              <Button variant="warning" size="sm" className={style.button1}>
+                Register
+              </Button>{" "}
+              </Link>
             </div>
           </Nav>
         </Container>

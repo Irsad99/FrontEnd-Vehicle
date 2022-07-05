@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
-import style from "./home.module.css";
+import style from "./sort.module.css";
 import axios from "axios";
-import { Container } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../component/header/header";
 import Footer from "../../component/footer/footer";
 import Card from "../../component/cards/cards";
-import { Body, Flex, Button } from '../../component/style_custom/Body_custom';
+import { Body, Flex, Button } from "../../component/style_custom/Body_custom";
 
 function Home() {
-  const [prod, setProd] = useState([]);
-  const [loc, setLoc] = useState("")
-  const [type, setType] = useState("")
-  const [price, setPrice] = useState("")
-  const [date, setDate] = useState("")
+  const [cost, setCost] = useState([]);
+
+  const [loc, setLoc] = useState("");
+  const [type, setType] = useState("");
+  const [price, setPrice] = useState("");
   const navigasi = useNavigate();
+  const params = useParams();
   const baseURL = process.env.REACT_APP_BASEURL
 
   const explore = () => {
@@ -24,36 +25,37 @@ function Home() {
       navigasi(`/sortprice/${price}`)
     } if (type !== ""){
       navigasi(`/sorttype/${type}`)
-    } if (date !== ""){
-      alert(`Hello ${date}`)
-    }
-  }
-
-  const getDataProd = async () => {
-    try {
-      const { data } = await axios.get(
-        `${baseURL}/vehicle/popular?rating=5`
-      );
-      setProd(data.data);
-    } catch (error) {
-      console.log("🚀 ~ file: home.jsx ~ line 14 ~ getDataProd ~ error", error);
     }
   };
 
   // didmount
   useEffect(() => {
-    getDataProd();
-  }, []);
+        axios
+      .get(
+        `${baseURL}/vehicle/sort?price=${params.price}`
+      )
+      .then((res) => {
+        setCost(res.data.data);
+      })
+      .catch((err) => {
+        console.log("🚀 ~ file: detail.jsx ~ line 16 ~ axios.get ~ err", err);
+      });
+    } , []);
 
   return (
     <>
       <Header />
       <Body>
-        <Container> 
+        <Container>
           <h1>Explore and Travel</h1>
           <p>Vehicle Finder</p>
           <Flex>
-            <select value={loc} onChange={(e) => setLoc(e.target.value)} name="location" id="location">
+            <select
+              value={loc}
+              onChange={(e) => setLoc(e.target.value)}
+              name="location"
+              id="location"
+            >
               <option value="" selected disabled hidden>
                 Location
               </option>
@@ -62,7 +64,12 @@ function Home() {
               <option value="Malang">Malang</option>
               <option value="Jakarta">Jakarta</option>
             </select>
-            <select value={type} onChange={(e) => setType(e.target.value)} name="cars" id="cars">
+            <select
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              name="cars"
+              id="cars"
+            >
               <option value="" selected disabled hidden>
                 Type
               </option>
@@ -72,16 +79,21 @@ function Home() {
             </select>
           </Flex>
           <Flex>
-            <select value={price} onChange={(e) => setPrice(e.target.value)} name="price" id="price">
+            <select
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              name="price"
+              id="price"
+            >
               <option value="" selected disabled hidden>
                 Payment
               </option>
-              <option value="50000"> {'>'} 50.000 </option>
-              <option value="100000"> {'>'} 100.000 </option>
-              <option value="200000"> {'>'} 200.000 </option>
-              <option value="400000"> {'>'} 400.000 </option>
+              <option value="50000"> {">"} 50.000 </option>
+              <option value="100000"> {">"} 100.000 </option>
+              <option value="200000"> {">"} 200.000 </option>
+              <option value="400000"> {">"} 400.000 </option>
             </select>
-            <select value={date} onChange={(e) => setDate(e.target.value)} name="date" id="date">
+            <select name="date" id="date">
               <option value="" selected disabled hidden>
                 Date
               </option>
@@ -104,12 +116,12 @@ function Home() {
       </Body>
       <div className={style.container}>
         <div className="sub">
-          <h2>popular in towns</h2>
+          <h2>Result</h2>
           <a href="/vehicle">view all {">"} </a>
         </div>
 
         <div className="content">
-          {prod.map((v) => {
+          {cost.map((v) => {
             return (
               <Card
                 key={v.vehicle_id}
@@ -120,24 +132,6 @@ function Home() {
               />
             );
           })}
-        </div>
-
-        <div className={style.sub}>
-          <h2>testimonials</h2>
-        </div>
-
-        <div className="testimoni">
-          <div>
-            "it was the right decision to rent vehicle here, I spent less money
-            and enjoy the trip. It was an amazing experience to have a ride for
-            wildlife trip!"
-            <span className="name">
-              <br />
-              <br /> Moh. Irsad
-            </span>
-            <br /> Founder YokNgoding
-          </div>
-          <Card backdrop="https://res.cloudinary.com/dsifbeghc/image/upload/v1656311817/go_image/Irsad_Foto_zkbwak.jpg" />
         </div>
       </div>
       <Footer />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import style from "./vehicle.module.css";
 import axios from "axios";
@@ -6,16 +7,25 @@ import Header from "../../component/header/header";
 import Footer from "../../component/footer/footer";
 import Card from "../../component/cards/cards";
 
-function Home() {
+function Vehicle() {
   const [prod, setProd] = useState([]);
   const [cars, setCars] = useState([]);
   const [mbike, setMBike] = useState([]);
   const [bike, setBike] = useState([]);
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+
+  const navigasi = useNavigate();
+  const baseURL = process.env.REACT_APP_BASEURL
+
+  const goSearch = () => {
+    navigasi(`/search/${name}/${location}`);
+  };
 
   const getDataProd = async () => {
     try {
       const { data } = await axios.get(
-        "https://myrentalbackend.herokuapp.com/vehicle/popular?rating=5"
+        `${baseURL}/vehicle/popular?rating=5`
       );
       setProd(data.data);
     } catch (error) {
@@ -26,7 +36,7 @@ function Home() {
   const getDataCars = async () => {
     try {
       const { data } = await axios.get(
-        "https://myrentalbackend.herokuapp.com/vehicle/type?category=Cars"
+        `${baseURL}/vehicle/sort?category=Cars`
       );
       setCars(data.data);
     } catch (error) {
@@ -37,7 +47,7 @@ function Home() {
   const getDataMBike = async () => {
     try {
       const { data } = await axios.get(
-        "https://myrentalbackend.herokuapp.com/vehicle/type?category=Motorbike"
+        `${baseURL}/vehicle/sort?category=Motorbike`
       );
       setMBike(data.data);
     } catch (error) {
@@ -48,7 +58,7 @@ function Home() {
   const getDataBike = async () => {
     try {
       const { data } = await axios.get(
-        "https://myrentalbackend.herokuapp.com/vehicle/type?category=Bike"
+        `${baseURL}/vehicle/sort?category=Bike`
       );
       setBike(data.data);
     } catch (error) {
@@ -81,13 +91,18 @@ function Home() {
           <Form>
             <Row>
               <Col>
-                <Form.Control placeholder="Vehicle Name" />
+                <Form.Control value={name} onChange={(e) => setName(e.target.value)} placeholder="Vehicle Name" />
               </Col>
               <Col>
-                <Form.Control placeholder="Location" />
+                <Form.Control value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Location" />
               </Col>
               <Col>
-                <Button variant="warning" size="sm" className={style.button1}>
+                <Button
+                  onClick={goSearch}
+                  variant="warning"
+                  size="sm"
+                  className={style.button1}
+                >
                   Search
                 </Button>{" "}
               </Col>
@@ -175,4 +190,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Vehicle;

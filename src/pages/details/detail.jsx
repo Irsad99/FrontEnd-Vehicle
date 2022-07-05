@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Row, Col} from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Button, Card, Row, Col } from "react-bootstrap";
+import { useParams, useNavigate } from "react-router-dom";
 import style from "./detail.module.css";
 import axios from "axios";
 import Header from "../../component/header/header";
@@ -8,12 +8,57 @@ import Footer from "../../component/footer/footer";
 
 function Details() {
   const [data, setData] = useState({});
+  const [stock, setStock] = useState(0);
   const params = useParams();
+  const navigasi = useNavigate();
+  const baseURL = process.env.REACT_APP_BASEURL
+
+  const goUpdate = () => {
+    navigasi(`/update/${params.id}`);
+  }
+
+  const notice = () => {
+    alert("Semangat")
+  }
+
+  // const calcPlus = () => {
+  //   setStock(stock + 1);
+  // };
+
+  // const calcMin = () => {
+  //   if (stock === 0) {
+  //     setStock(0);
+  //   } else {
+  //     setStock(stock - 1);
+  //   }
+  // };
+
+  const calcPlus = () => {
+    if (stock !== data.stock) {
+      setStock(stock + 1);
+    } else {
+      if (stock === data.stock) {
+        setStock(data.stock);
+      }
+    }
+  };
+
+  const calcMin = () => {
+    if (data.stock === 0) {
+      setStock(data.stock);
+    } else {
+      if (stock !== 0) {
+        setStock(stock - 1);
+      } else {
+        setStock(0);
+      }
+    }
+  };
 
   useEffect(() => {
     axios
       .get(
-        `https://myrentalbackend.herokuapp.com/vehicle/product?id=${params.id}`
+        `${baseURL}/vehicle/product?id=${params.id}`
       )
       .then((res) => {
         setData(res.data.data);
@@ -63,22 +108,32 @@ function Details() {
             ))}
           </Row>
           <div className={style.stock}>
-            <Button variant="warning" size="sm" className={style.button1}>
-              +
+            <Button
+              onClick={calcPlus}
+              variant="warning"
+              size="sm"
+              className={style.button1}
+            >
+              + 
             </Button>{" "}
-            <h3>{data.stock}</h3>
-            <Button variant="outline" size="sm" className={style.button1}>
+            <h3>{stock}</h3>
+            <Button
+              onClick={calcMin}
+              variant="outline"
+              size="sm"
+              className={style.button1}
+            >
               -
             </Button>{" "}
           </div>
           <div className={style.newdiv}>
-            <Button variant="dark" size="sm" className={style.btn1}>
-              Chat Admin
+            <Button onClick={goUpdate} variant="dark" size="sm" className={style.btn1}>
+              Edit Item
             </Button>{" "}
-            <Button variant="warning" size="sm" className={style.btn2}>
+            <Button onClick={notice} variant="warning" size="sm" className={style.btn2}>
               Reservation
             </Button>{" "}
-            <Button variant="dark" size="sm" className={style.btn3}>
+            <Button onClick={notice} variant="dark" size="sm" className={style.btn3}>
               Like
             </Button>{" "}
           </div>

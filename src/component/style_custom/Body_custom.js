@@ -4,7 +4,7 @@ export const Body = styled.div`
   height: 767px;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
     url('https://res.cloudinary.com/dsifbeghc/image/upload/v1656054359/go_image/Lamborghini_2019_jbnnbo.jpg');
-  //   background-color: pink;
+    // background-color: pink;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -52,6 +52,15 @@ export const Body = styled.div`
     background-size: 5px 4px, 5px 4px, 1px 2em;
     background-repeat: no-repeat;
   }
+
+  Form {
+    width: 300px;
+    height: 100px;
+    border-radius: 6px;
+    font-weight: 900;
+    text-transform: capitalize;
+    display: inline-block;
+  }
 `;
 
 export const Flex = styled.div`
@@ -69,7 +78,7 @@ text-transform:capitalize;
 width: 180px;
 height: 52px;
 margin-left: 10px;
-margin-top: 52px;
+margin-top: 62px;
 border-radius: 6px;
 font-weight: 900;
   }

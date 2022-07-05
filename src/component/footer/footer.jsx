@@ -1,13 +1,13 @@
-import React from 'react';
-import { Foot, Content } from '../style_custom/Footer_custom';
-import logo from './logo.png';
+import React from "react";
+import { Foot, Content } from "../style_custom/Footer_custom";
+import logo from "./logo.png";
 
 const Footer = () => {
   return (
     <>
       <Foot>
         <Content>
-          {' '}
+          {" "}
           <div>
             <img
               alt=""
@@ -17,16 +17,16 @@ const Footer = () => {
               className="d-inline-block align-top"
             />
             <p>
-              {' '}
+              {" "}
               <br />
               Plan and book your perfect trip with expert advice, travel tips
               for vehicle information from us
-            </p>{' '}
+            </p>{" "}
             <br />
             <p>2022 My Vehicle Rental. All rights reserved</p>
           </div>
           <ul>
-            {' '}
+            {" "}
             Destinations
             <li>Bali</li>
             <li>Jogjakarta</li>
@@ -35,7 +35,7 @@ const Footer = () => {
             <li>Malang</li>
           </ul>
           <ul>
-            {' '}
+            {" "}
             Vehicle
             <li>Bike</li>
             <li>Cars</li>
@@ -44,7 +44,7 @@ const Footer = () => {
             <li>FAQs</li>
           </ul>
           <ul>
-            {' '}
+            {" "}
             Interest
             <li>Adventure</li>
             <li>Art and Culture</li>
@@ -53,6 +53,14 @@ const Footer = () => {
             <li>Culinary Trip</li>
           </ul>
         </Content>
+        {/* <hr />
+        <img
+          alt=""
+          src={logo}
+          width="40"
+          height="40"
+          className="d-inline-block align-top"
+        /> */}
       </Foot>
     </>
   );

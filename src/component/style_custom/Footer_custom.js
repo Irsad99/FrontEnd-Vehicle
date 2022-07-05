@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Foot = styled.div`
   height: auto;
   background-color: #f9f9fb;
-  box-si
 `;
 
 export const Content = styled.div`

@@ -8,9 +8,8 @@ export const Card = styled.div`
   color: white;
   border-radius: 10px;
   padding: 1em;
-  /*margin: 2em;*/
   display: flex;
-  align-items: flex-end;
+  // align-items: flex-end;
   background-image: url('${({ bg, backdrop }) => bg || backdrop}');
   background-size: cover;
   background-position: center;

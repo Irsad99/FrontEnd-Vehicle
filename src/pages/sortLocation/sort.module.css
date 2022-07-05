@@ -1,0 +1,11 @@
+.container {
+    width: 90%;
+    padding: 20px;
+    margin: 50px auto;
+}
+
+h2 {
+    font-family: Playfair Display;
+    text-transform: capitalize;
+    font-weight: bold;
+  }

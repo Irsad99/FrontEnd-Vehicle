@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { Container } from 'react-bootstrap';
 import { Body, Flex, Button } from '../style_custom/Body_custom';
 
 function body() {
+
+  const explore = () => {
+    
+  }
+
   return (
     <>
       <Body>
@@ -10,7 +15,7 @@ function body() {
           <h1>Explore and Travel</h1>
           <p>Vehicle Finder</p>
           <Flex>
-            <select name="cars" id="cars">
+            <select name="location" id="location">
               <option value="" selected disabled hidden>
                 Location
               </option>
@@ -29,16 +34,16 @@ function body() {
             </select>
           </Flex>
           <Flex>
-            <select name="cars" id="cars">
+            <select name="price" id="price">
               <option value="" selected disabled hidden>
                 Payment
               </option>
-              <option value="50.000"> {'>'} 50.000 </option>
-              <option value="100.000"> {'>'} 100.000 </option>
-              <option value="200.000"> {'>'} 200.000 </option>
-              <option value="400.000"> {'>'} 400.000 </option>
+              <option value="50000"> {'>'} 50.000 </option>
+              <option value="100000"> {'>'} 100.000 </option>
+              <option value="200000"> {'>'} 200.000 </option>
+              <option value="400000"> {'>'} 400.000 </option>
             </select>
-            <select name="cars" id="cars">
+            <select name="date" id="date">
               <option value="" selected disabled hidden>
                 Date
               </option>
@@ -56,7 +61,7 @@ function body() {
               <option value="Desember">Desember</option>
             </select>
           </Flex>
-          <Button>explore</Button>
+          <Button onClick={explore}>explore</Button>
         </Container>
       </Body>
     </>

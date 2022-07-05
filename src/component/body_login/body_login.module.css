@@ -1,0 +1,19 @@
+.form {
+    font-family: Nunito;
+    font-size: 17px;
+    font-weight: bold;
+    margin: 10px 20px 20px 10px;
+    padding-left: 20px;
+}
+
+.form::placeholder {
+    color: rgb(250, 249, 243);
+    /* opacity: 1; */
+}
+
+.forgot {
+    font-family: Nunito;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+}
