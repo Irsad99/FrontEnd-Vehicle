@@ -15,13 +15,13 @@ function router() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
+                <Route path={`${process.env.FRONT_END_URL}/`} element={<Home />} />
+                <Route path={`${process.env.FRONT_END_URL}/login`} element={<Login />} />
+                <Route path={`${process.env.FRONT_END_URL}/register`} element={<Register />} />
                 <Route path="detail/:id" element={<Detail />} />
                 <Route path="search/:name/:location" element={<Search />} />
                 <Route path="update/:id" element={<Update />} />
-                <Route path="vehicle" element={<Vehicle />} />
+                <Route path={`${process.env.FRONT_END_URL}/vehicle`} element={<Vehicle />} />
                 <Route path="sortlocation/:location" element={<SortLocation />} />
                 <Route path="sortprice/:price" element={<SortPrice />} />
                 <Route path="sorttype/:type" element={<SortType />} />
