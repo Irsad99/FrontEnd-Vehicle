@@ -2,7 +2,8 @@ import React from "react";
 import style from "./header.module.css";
 import logo from "./logo.png";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
-import { Link } from "../style_custom/Link_custom";
+// import { Link } from "../style_custom/Link_custom";
+import { Link } from "react-router-dom";
 
 function header() {
   return (
@@ -20,11 +21,11 @@ function header() {
           </Navbar.Brand>
           <Nav>
             <div className={style.navbold}>
-              <Link href="/">Home</Link>
-              <Link href="/vehicle">Vehicle Type</Link>
-              <Link href="/history">History</Link>
-              <Link href="/about">About</Link>
-              <Link href="/login">
+              <Link to={"/"} className={style.a}>Home</Link>
+              <Link to={"/vehicle"} className={style.a}>Vehicle Type</Link>
+              <Link to={"/history"} className={style.a}>History</Link>
+              <Link to={"/about"} className={style.a}>About</Link>
+              <Link to={"/login"} className={style.a}>
                 <Button
                   variant="outline-warning"
                   size="sm"
@@ -33,7 +34,7 @@ function header() {
                   Login
                 </Button>{" "}
               </Link>
-              <Link href="/register">
+              <Link to={"/register"} className={style.a}>
               <Button variant="warning" size="sm" className={style.button1}>
                 Register
               </Button>{" "}

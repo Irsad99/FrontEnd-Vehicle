@@ -4,7 +4,7 @@
 }
 
 .button1 {
-    width:100px;
+    width: 100px;
     margin-left: 15px;
     margin-bottom: 3px;
 }
@@ -17,4 +17,21 @@
 
 .navbold {
     font-weight: 500;
+}
+
+.a {
+    font-family: Nunito;
+    font-weight: 500;
+    padding: 15px;
+    display: inline-block;
+    color: gray;
+    text-decoration: none !important;
+}
+
+.a:hover {
+    color: black;
+}
+
+.a:focus {
+    color: orange;
 }
