@@ -23,7 +23,7 @@ function header() {
               <Link href="/">Home</Link>
               <Link href="/vehicle">Vehicle Type</Link>
               <Link href="/history">History</Link>
-              <Link href="about">About</Link>
+              <Link href="/about">About</Link>
               <Link href="/login">
                 <Button
                   variant="outline-warning"
