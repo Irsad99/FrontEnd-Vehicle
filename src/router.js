@@ -16,12 +16,12 @@ function router() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 <Route path="detail/:id" element={<Detail />} />
                 <Route path="search/:name/:location" element={<Search />} />
                 <Route path="update/:id" element={<Update />} />
-                <Route path="vehicle" element={<Vehicle />} />
+                <Route path="/vehicle" element={<Vehicle />} />
                 <Route path="sortlocation/:location" element={<SortLocation />} />
                 <Route path="sortprice/:price" element={<SortPrice />} />
                 <Route path="sorttype/:type" element={<SortType />} />
