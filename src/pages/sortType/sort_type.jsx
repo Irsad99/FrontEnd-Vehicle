@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import style from "./sort.module.css";
+import style from "./sort_type.module.css";
 import axios from "axios";
 import { Container } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";

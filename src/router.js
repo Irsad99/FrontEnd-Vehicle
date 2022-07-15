@@ -7,7 +7,7 @@ import Vehicle from './pages/vehicle/vehicle'
 import Search from './pages/search/search'
 import SortLocation from './pages/sortLocation/sort.location'
 import SortPrice from './pages/sortPrice/sort.price'
-import SortType from './pages/sortType/sort.type'
+import SortType from './pages/sortType/sort_type'
 import Login from './pages/login/login'
 import Register from './pages/register/register'
 

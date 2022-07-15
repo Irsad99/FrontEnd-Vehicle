@@ -21,8 +21,6 @@ a:hover {
 
 .content {
     display: flex;
-    justify-content: start;
-    align-self: flex-start;
     flex-wrap: wrap;
     position: relative;
 }
@@ -65,8 +63,6 @@ a:hover {
 
 .stock {
     display: flex;
-    justify-content: start;
-    align-self: flex-start;
     flex-wrap: wrap;
     margin-top: -60px;
 }

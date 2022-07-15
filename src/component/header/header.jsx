@@ -21,10 +21,10 @@ function header() {
           <Nav>
             <div className={style.navbold}>
               <Link href="/">Home</Link>
-              <Link href="vehicle">Vehicle Type</Link>
+              <Link href="/vehicle">Vehicle Type</Link>
               <Link href="/history">History</Link>
               <Link href="/about">About</Link>
-              <Link href="login">
+              <Link href="/login">
                 <Button
                   variant="outline-warning"
                   size="sm"
@@ -33,7 +33,7 @@ function header() {
                   Login
                 </Button>{" "}
               </Link>
-              <Link href="register">
+              <Link href="/register">
               <Button variant="warning" size="sm" className={style.button1}>
                 Register
               </Button>{" "}
