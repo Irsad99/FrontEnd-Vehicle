@@ -3,7 +3,6 @@ import style from "./header.module.css";
 import logo from "./logo.png";
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { Link } from "../style_custom/Link_custom";
-import { useNavigate } from "react-router-dom";
 
 function header() {
   return (
