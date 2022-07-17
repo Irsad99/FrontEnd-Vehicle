@@ -2,50 +2,40 @@ import React, { useState, useEffect } from "react";
 import { Button, Card, Row, Col } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import style from "./detail.module.css";
-import axios from "axios";
+import useApi from "../../helpers/useApi";
+import withAuth from "../../helpers/withAuth";
 import Header from "../../component/header/header";
 import Footer from "../../component/footer/footer";
 
 function Details() {
-  const [data, setData] = useState({});
+  const [prod, setProd] = useState([]);
   const [stock, setStock] = useState(0);
   const params = useParams();
-  const navigasi = useNavigate();
-  const baseURL = process.env.REACT_APP_BASEURL
+  const navigate = useNavigate();
+
+  const api = useApi()
 
   const goUpdate = () => {
-    navigasi(`/update/${params.id}`);
+    navigate(`/update/${params.id}`);
   }
 
   const notice = () => {
     alert("Semangat")
   }
 
-  // const calcPlus = () => {
-  //   setStock(stock + 1);
-  // };
-
-  // const calcMin = () => {
-  //   if (stock === 0) {
-  //     setStock(0);
-  //   } else {
-  //     setStock(stock - 1);
-  //   }
-  // };
-
   const calcPlus = () => {
-    if (stock !== data.stock) {
+    if (stock !== prod.stock) {
       setStock(stock + 1);
     } else {
-      if (stock === data.stock) {
-        setStock(data.stock);
+      if (stock === prod.stock) {
+        setStock(prod.stock);
       }
     }
   };
 
   const calcMin = () => {
-    if (data.stock === 0) {
-      setStock(data.stock);
+    if (prod.stock === 0) {
+      setStock(prod.stock);
     } else {
       if (stock !== 0) {
         setStock(stock - 1);
@@ -55,17 +45,23 @@ function Details() {
     }
   };
 
-  useEffect(() => {
-    axios
-      .get(
-        `${baseURL}/vehicle/product?id=${params.id}`
-      )
+  const getDataID = () => {
+    api
+      .requests({
+        method: "GET",
+        url: `/vehicle/product?id=${params.id}`,
+      })
       .then((res) => {
-        setData(res.data.data);
+        const { data } = res.data;
+        setProd(data)
       })
       .catch((err) => {
-        console.log("🚀 ~ file: detail.jsx ~ line 16 ~ axios.get ~ err", err);
+        console.log(err);
       });
+  };
+
+  useEffect(() => {
+    getDataID()
   }, []);
 
   return (
@@ -77,22 +73,22 @@ function Details() {
         </div>
 
         <div className={style.content}>
-          <img src={data.image} alt={data.name} className={style.image} />
+          <img src={prod.image} alt={prod.name} className={style.image} />
           <div className={style.rightside}>
-            <h4>{data.name}</h4>
-            <h5>{data.location}</h5>
+            <h4>{prod.name}</h4>
+            <h5>{prod.location}</h5>
 
             <div className={style.status}>
-              <p className={style.ava}>{data.status}</p>
+              <p className={style.ava}>{prod.status}</p>
             </div>
 
             <div className={style.desc}>
-              <p>Capacity: {data.description}</p>
-              <p>Type: {data.category}</p>
-              <p>Reservation : {data.description} </p>
+              <p>Capacity: {prod.description}</p>
+              <p>Type: {prod.category}</p>
+              <p>Reservation : {prod.description} </p>
             </div>
 
-            <p className={style.price}>Rp. {data.price}/day</p>
+            <p className={style.price}>Rp. {prod.price}/day</p>
           </div>
           <Row xs={1} md={2}>
             {Array.from({ length: 2 }).map((_, idx) => (
@@ -101,7 +97,7 @@ function Details() {
                   <Card.Img
                     className={style.dispimage}
                     variant="top"
-                    src={data.image}
+                    src={prod.image}
                   />
                 </Card>
               </Col>
@@ -109,6 +105,7 @@ function Details() {
           </Row>
           <div className={style.stock}>
             <Button
+              disabled
               onClick={calcPlus}
               variant="warning"
               size="sm"
@@ -116,8 +113,9 @@ function Details() {
             >
               + 
             </Button>{" "}
-            <h3>{stock}</h3>
+            <h3>{prod.stock}</h3>
             <Button
+              disabled
               onClick={calcMin}
               variant="outline"
               size="sm"
@@ -144,4 +142,4 @@ function Details() {
   );
 }
 
-export default Details;
+export default withAuth(Details);

@@ -2,87 +2,99 @@ import React, { useState, useEffect } from "react";
 import { Button, Card, Row, Col, Form } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import style from "./updates.module.css";
-import axios from "axios";
+import useApi from "../../helpers/useApi";
+import withAuth from "../../helpers/withAuth";
 import Header from "../../component/header/header";
 import Footer from "../../component/footer/footer";
 
 function Updates() {
   const [data, setData] = useState({});
-  const [stock, setStock] = useState(0);
-  const [name, setName] = useState("");
-  const [loc, setLoc] = useState("");
-  const [desc, setDesc] = useState("");
-  const [price, setPrice] = useState("");
-  const [status, setStatus] = useState("");
-  const [category, setCategory] = useState("");
+  const [vehicle, setVehicle] = useState({
+    name: "",
+    location: "",
+    status: "",
+    description: "",
+    category: "",
+    price: "",
+    stock: 0,
+  });
+
   const params = useParams();
-  const navigasi = useNavigate();
-  const baseURL = process.env.REACT_APP_BASEURL
+  const navigate = useNavigate();
+  const api = useApi();
 
   const calcPlus = () => {
-    setStock(stock + 1);
+    const data = { ...vehicle };
+    vehicle.stock += 1;
+    data.stock = vehicle.stock;
+    setVehicle(data);
   };
 
   const calcMin = () => {
-    if (stock === 0) {
-      setStock(0);
+    const data = { ...vehicle };
+    if (vehicle.stock === 0) {
+      data.stock = vehicle.stock;
+      setVehicle(data);
     } else {
-      setStock(stock - 1);
+      vehicle.stock -= 1;
+      data.stock = vehicle.stock;
+      setVehicle(data);
     }
   };
 
-  const update = async (e) => {
+  const onChangeInput = (e) => {
     e.preventDefault();
+    const data = { ...vehicle };
+    data[e.target.name] = e.target.value;
+    setVehicle(data);
+  };
 
-    axios
-      .put(
-        `${baseURL}/vehicle/update?id=${params.id}`,
-        {
-          name: name,
-          location: loc,
-          description: desc,
-          price: price,
-          status: status,
-          stock: stock,
-          category: category,
-        }
-      )
+  const update = () => {
+    api
+      .requests({
+        method: "PUT",
+        url: `/vehicle/update?id=${params.id}`,
+        data: vehicle,
+      })
       .then(() => {
-        //redirect
-        navigasi(`/detail/${params.id}`);
+        navigate(`/detail/${params.id}`);
       })
       .catch((err) => {
-        //assign validation on state
-        // setValidation(error.response.data);
-        console.log("🚀 ~ file: detail.jsx ~ line 16 ~ axios.get ~ err", err);
+        console.log(err);
       });
   };
 
-  const deleted = async (id) => {
-    axios
-      .delete(`${baseURL}/vehicle/delete/${id}`)
-      .then(() => {
-        //redirect
-        navigasi(`/vehicle`);
+  const getDataID = () => {
+    api
+      .requests({
+        method: "GET",
+        url: `/vehicle/product?id=${params.id}`,
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setData(data);
       })
       .catch((err) => {
-        //assign validation on state
-        // setValidation(error.response.data);
-        console.log("🚀 ~ file: detail.jsx ~ line 16 ~ axios.get ~ err", err);
+        console.log(err);
       });
   };
+
+  // const deleted = async (id) => {
+  //   axios
+  //     .delete(`${baseURL}/vehicle/delete/${id}`)
+  //     .then(() => {
+  //       //redirect
+  //       navigate(`/vehicle`);
+  //     })
+  //     .catch((err) => {
+  //       //assign validation on state
+  //       // setValidation(error.response.data);
+  //       console.log("🚀 ~ file: detail.jsx ~ line 16 ~ axios.get ~ err", err);
+  //     });
+  // };
 
   useEffect(() => {
-    axios
-      .get(
-        `${baseURL}/vehicle/product?id=${params.id}`
-      )
-      .then((res) => {
-        setData(res.data.data);
-      })
-      .catch((err) => {
-        console.log("🚀 ~ file: detail.jsx ~ line 16 ~ axios.get ~ err", err);
-      });
+    getDataID();
   }, []);
 
   return (
@@ -103,61 +115,58 @@ function Updates() {
           <div className={style.rightside}>
             <Form className={style.formParent}>
               <Form.Group
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={onChangeInput}
                 className={style.form}
                 id="name"
               >
                 <Form.Control
                   className={style.value}
                   type="text"
+                  name="name"
                   plaintext
                   defaultValue={data.name}
                 />
               </Form.Group>
               <Form.Group
-                value={loc}
-                onChange={(e) => setLoc(e.target.value)}
+                onChange={onChangeInput}
                 className={style.form}
                 id="location"
               >
                 <Form.Control
                   className={style.value}
                   type="text"
+                  name="location"
                   plaintext
                   defaultValue={data.location}
                 />
               </Form.Group>
               <Form.Group
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
+                onChange={onChangeInput}
                 className={style.form}
                 id="description"
               >
                 <Form.Control
                   className={style.value}
                   type="text"
+                  name="description"
                   plaintext
                   defaultValue={data.description}
                 />
               </Form.Group>
-              <Form.Group
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                id="price"
-              >
+              <Form.Group onChange={onChangeInput} id="price">
                 <Form.Label className={style.label}>Price :</Form.Label>
                 <Form.Control
                   className={style.value2}
                   type="text"
+                  name="price"
                   defaultValue={data.price}
                 />
               </Form.Group>
               <Form.Group id="status">
                 <Form.Label className={style.label}>Status :</Form.Label>
                 <Form.Select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
+                  onChange={onChangeInput}
+                  name="status"
                   className={style.value2}
                 >
                   <option value="" selected disabled hidden>
@@ -194,8 +203,8 @@ function Updates() {
             >
               +
             </Button>{" "}
-            <h3 value={stock} onChange={(e) => setStock(e.target.value)}>
-              {stock}
+            <h3 name="stock">
+              {vehicle.stock}
             </h3>
             <Button
               onClick={calcMin}
@@ -208,8 +217,8 @@ function Updates() {
           </div>
           <div className={style.newdiv}>
             <Form.Select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={onChangeInput}
+              name="category"
               className={style.selData}
             >
               <option>Add item to</option>
@@ -225,12 +234,7 @@ function Updates() {
             >
               Save Change
             </Button>{" "}
-            <Button
-              onClick={deleted}
-              variant="dark"
-              size="sm"
-              className={style.btn3}
-            >
+            <Button variant="dark" size="sm" className={style.btn3}>
               Delete
             </Button>{" "}
           </div>
@@ -241,4 +245,4 @@ function Updates() {
   );
 }
 
-export default Updates;
+export default withAuth(Updates);

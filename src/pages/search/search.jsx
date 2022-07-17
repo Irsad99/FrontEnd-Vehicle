@@ -2,33 +2,39 @@ import React, { useState, useEffect } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import style from "./search.module.css";
-import axios from "axios";
+import useApi from "../../helpers/useApi";
+import withAuth from "../../helpers/withAuth";
 import Header from "../../component/header/header";
 import Footer from "../../component/footer/footer";
 import Card from "../../component/cards/cards";
 
 function Search() {
   const [prod, setProd] = useState([]);
-  const params = useParams()
+  const params = useParams();
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
 
-  const navigasi = useNavigate();
+  const navigate = useNavigate();
+  const api = useApi();
 
   const goSearch = () => {
-    navigasi(`/search/${name}/${location}`);
+    navigate(`/search/${name}/${location}`);
+    window.location.reload(false);
   };
 
-  const getDataProd = async () => {
-    const baseURL = process.env.REACT_APP_BASEURL
-    try {
-      const { data } = await axios.get(
-        `${baseURL}/vehicle/search?name=${params.name}&location=${params.location}`
-      );
-      setProd(data.data);
-    } catch (error) {
-      console.log("🚀 ~ file: home.jsx ~ line 14 ~ getDataProd ~ error", error);
-    }
+  const getDataProd = () => {
+    api
+      .requests({
+        method: "GET",
+        url: `/vehicle/search?name=${params.name}&location=${params.location}`,
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setProd(data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // didmount
@@ -81,4 +87,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default withAuth(Search);

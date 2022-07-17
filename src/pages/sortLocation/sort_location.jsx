@@ -1,46 +1,57 @@
 import React, { useState, useEffect } from "react";
-import style from "./sort.module.css";
-import axios from "axios";
+import style from "./sort_location.module.css";
+import useApi from "../../helpers/useApi";
 import { Container } from "react-bootstrap";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import Header from "../../component/header/header";
 import Footer from "../../component/footer/footer";
 import Card from "../../component/cards/cards";
 import { Body, Flex, Button } from "../../component/style_custom/Body_custom";
+import withAuth from '../../helpers/withAuth'
 
-function Home() {
-  const [cost, setCost] = useState([]);
+function Location() {
+  const [locations, setLocation] = useState([]);
 
   const [loc, setLoc] = useState("");
   const [type, setType] = useState("");
   const [price, setPrice] = useState("");
-  const navigasi = useNavigate();
+  const navigate = useNavigate();
   const params = useParams();
-  const baseURL = process.env.REACT_APP_BASEURL
+
+  const api = useApi();
 
   const explore = () => {
-    if (loc !== ""){
-      navigasi(`/sortlocation/${loc}`)
-    } if (price !== ""){
-      navigasi(`/sortprice/${price}`)
-    } if (type !== ""){
-      navigasi(`/sorttype/${type}`)
+    if (loc !== "") {
+      navigate(`/sortlocation/${loc}`);
+      window.location.reload(false);
     }
+    if (price !== "") {
+      navigate(`/sortprice/${price}`);
+    }
+    if (type !== "") {
+      navigate(`/sorttype/${type}`);
+    }
+  };
+
+  const getLocation = () => {
+    api
+      .requests({
+        method: "GET",
+        url: `/vehicle/sort?location=${params.location}`,
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setLocation(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // didmount
   useEffect(() => {
-        axios
-      .get(
-        `${baseURL}/vehicle/sort?price=${params.price}`
-      )
-      .then((res) => {
-        setCost(res.data.data);
-      })
-      .catch((err) => {
-        console.log("🚀 ~ file: detail.jsx ~ line 16 ~ axios.get ~ err", err);
-      });
-    } , []);
+    getLocation();
+  }, []);
 
   return (
     <>
@@ -121,7 +132,7 @@ function Home() {
         </div>
 
         <div className="content">
-          {cost.map((v) => {
+          {locations.map((v) => {
             return (
               <Card
                 key={v.vehicle_id}
@@ -139,4 +150,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withAuth(Location);

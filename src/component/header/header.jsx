@@ -5,7 +5,7 @@ import { Navbar, Container, Nav, Button } from "react-bootstrap";
 // import { Link } from "../style_custom/Link_custom";
 import { Link } from "react-router-dom";
 
-function header() {
+function header(props) {
   return (
     <>
       <Navbar className={style.nav}>

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import style from "./vehicle.module.css";
-import axios from "axios";
+import useApi from "../../helpers/useApi";
+import withAuth from "../../helpers/withAuth";
 import Header from "../../component/header/header";
 import Footer from "../../component/footer/footer";
 import Card from "../../component/cards/cards";
@@ -16,54 +17,70 @@ function Vehicle() {
   const [location, setLocation] = useState("");
 
   const navigasi = useNavigate();
-  const baseURL = process.env.REACT_APP_BASEURL
+  const api = useApi();
 
   const goSearch = () => {
     navigasi(`/search/${name}/${location}`);
   };
 
-  const getDataProd = async () => {
-    try {
-      const { data } = await axios.get(
-        `${baseURL}/vehicle/popular?rating=5`
-      );
-      setProd(data.data);
-    } catch (error) {
-      console.log("🚀 ~ file: home.jsx ~ line 14 ~ getDataProd ~ error", error);
-    }
+  const getDataProd = () => {
+    api
+      .requests({
+        method: "GET",
+        url: "/vehicle/popular?rating=5",
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setProd(data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const getDataCars = async () => {
-    try {
-      const { data } = await axios.get(
-        `${baseURL}/vehicle/sort?category=Cars`
-      );
-      setCars(data.data);
-    } catch (error) {
-      console.log("🚀 ~ file: home.jsx ~ line 14 ~ getDataProd ~ error", error);
-    }
+  const getDataCars = () => {
+    api
+      .requests({
+        method: "GET",
+        url: "/vehicle/sort?category=Cars",
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setCars(data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const getDataMBike = async () => {
-    try {
-      const { data } = await axios.get(
-        `${baseURL}/vehicle/sort?category=Motorbike`
-      );
-      setMBike(data.data);
-    } catch (error) {
-      console.log("🚀 ~ file: home.jsx ~ line 14 ~ getDataProd ~ error", error);
-    }
+  const getDataMBike = () => {
+    api
+      .requests({
+        method: "GET",
+        url: "/vehicle/sort?category=Motorbike",
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setMBike(data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const getDataBike = async () => {
-    try {
-      const { data } = await axios.get(
-        `${baseURL}/vehicle/sort?category=Bike`
-      );
-      setBike(data.data);
-    } catch (error) {
-      console.log("🚀 ~ file: home.jsx ~ line 14 ~ getDataProd ~ error", error);
-    }
+  const getDataBike = () => {
+    api
+      .requests({
+        method: "GET",
+        url: "/vehicle/sort?category=Bike",
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setBike(data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // didmount
@@ -190,4 +207,4 @@ function Vehicle() {
   );
 }
 
-export default Vehicle;
+export default withAuth(Vehicle);

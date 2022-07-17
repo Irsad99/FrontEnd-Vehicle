@@ -2,44 +2,48 @@ import React, { useState } from "react";
 import style from "./register.module.css";
 import { Container, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useDispatch } from "react-redux";
 import Header from "../../component/header/header";
 import Footer from "../../component/footer/footer";
 import { Body, Flex } from "../../component/style_custom/Body_custom";
+import useApi from "../../helpers/useApi";
+import { addUsers } from "../../store/reducer/user";
 
 function Register() {
-  const navigasi = useNavigate();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const baseURL = process.env.REACT_APP_BASEURL
+  const navigate = useNavigate();
+  const [Users, setUsers] = useState({ email: "email", password: "password" });
+
+  const api = useApi();
+  const dispatch = useDispatch();
 
   const login = async () => {
-    navigasi("/login");
+    navigate("/login");
   };
 
   const signupGoogle = () => {
     alert("Semangat Google");
   };
 
-  const signup = async (e) => {
+  const onChangeInput = (e) => {
     e.preventDefault();
+    const data = { ...Users };
+    data[e.target.name] = e.target.value;
+    setUsers(data);
+  };
 
-    axios
-      .post(`${baseURL}/user/register`, {
-        name: name,
-        email: email,
-        password: password,
+  const signup = () => {
+    api
+      .requests({
+        method: "POST",
+        url: "/user/register",
+        data: Users,
       })
-      .then(() => {
-        //redirect
-        // navigasi(`/detail/${params.id}`);
-        alert(`name: ${name}, email : ${email}, password : ${password} data berhasil ditambah`);
+      .then((res) => {
+        dispatch(addUsers(res.data))
+        navigate("/login");
       })
       .catch((err) => {
-        //assign validation on state
-        // setValidation(error.response.data);
-        alert(err)
+        console.log(err);
       });
   };
 
@@ -66,20 +70,20 @@ function Register() {
               <Form.Group className={style.line}>
                 <Form.Group className={style.parent2} id="name" name="name">
                   <Form.Control
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={onChangeInput}
                     className={style.form}
                     type="name"
+                    name="name"
                     placeholder="Name"
                   />
                 </Form.Group>
 
                 <Form.Group className={style.parent2} id="email" name="email">
                   <Form.Control
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={onChangeInput}
                     className={style.form}
                     type="email"
+                    name="email"
                     placeholder="Email"
                   />
                 </Form.Group>
@@ -90,10 +94,10 @@ function Register() {
                   name="password"
                 >
                   <Form.Control
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={onChangeInput}
                     className={style.form}
                     type="password"
+                    name="password"
                     placeholder="Password"
                   />
                 </Form.Group>
@@ -109,7 +113,11 @@ function Register() {
                 </Form.Group>
 
                 <Form.Group className={style.parent2}>
-                  <Button onClick={signupGoogle} variant="light" className={style.btn2}>
+                  <Button
+                    onClick={signupGoogle}
+                    variant="light"
+                    className={style.btn2}
+                  >
                     Sign Up With Google
                   </Button>{" "}
                 </Form.Group>

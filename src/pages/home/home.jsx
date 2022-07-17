@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import style from "./home.module.css";
-import axios from "axios";
+import useApi from "../../helpers/useApi";
 import { Container } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import Header from "../../component/header/header";
@@ -14,30 +14,36 @@ function Home() {
   const [type, setType] = useState("")
   const [price, setPrice] = useState("")
   const [date, setDate] = useState("")
-  const navigasi = useNavigate();
-  const baseURL = process.env.REACT_APP_BASEURL
+  const navigate = useNavigate();
+
+  const api = useApi()
+
 
   const explore = () => {
     if (loc !== ""){
-      navigasi(`/sortlocation/${loc}`)
+      navigate(`/sortlocation/${loc}`)
     } if (price !== ""){
-      navigasi(`/sortprice/${price}`)
+      navigate(`/sortprice/${price}`)
     } if (type !== ""){
-      navigasi(`/sorttype/${type}`)
+      navigate(`/sorttype/${type}`)
     } if (date !== ""){
       alert(`Hello ${date}`)
     }
   }
 
   const getDataProd = async () => {
-    try {
-      const { data } = await axios.get(
-        `${baseURL}/vehicle/popular?rating=5`
-      );
-      setProd(data.data);
-    } catch (error) {
-      console.log("🚀 ~ file: home.jsx ~ line 14 ~ getDataProd ~ error", error);
-    }
+    api
+      .requests({
+        method: "GET",
+        url: "/vehicle/popular?rating=5",
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setProd(data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // didmount

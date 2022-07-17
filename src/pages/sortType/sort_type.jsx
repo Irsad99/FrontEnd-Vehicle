@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import style from "./sort_type.module.css";
-import axios from "axios";
+import useApi from "../../helpers/useApi";
+import withAuth from "../../helpers/withAuth";
 import { Container } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../component/header/header";
@@ -8,7 +9,7 @@ import Footer from "../../component/footer/footer";
 import Card from "../../component/cards/cards";
 import { Body, Flex, Button } from "../../component/style_custom/Body_custom";
 
-function Home() {
+function Type() {
   const [category, setCategory] = useState([]);
 
   const [loc, setLoc] = useState("");
@@ -16,31 +17,41 @@ function Home() {
   const [price, setPrice] = useState("");
   const navigasi = useNavigate();
   const params = useParams();
-  const baseURL = process.env.REACT_APP_BASEURL
+
+  const api = useApi();
 
   const explore = () => {
-    if (loc !== ""){
-      navigasi(`/sortlocation/${loc}`)
-    } if (price !== ""){
-      navigasi(`/sortprice/${price}`)
-    } if (type !== ""){
-      navigasi(`/sorttype/${type}`)
+    if (loc !== "") {
+      navigasi(`/sortlocation/${loc}`);
     }
+    if (price !== "") {
+      navigasi(`/sortprice/${price}`);
+    }
+    if (type !== "") {
+      navigasi(`/sorttype/${type}`);
+      window.location.reload(false);
+    }
+  };
+
+  const getType = () => {
+    api
+      .requests({
+        method: "GET",
+        url: `/vehicle/sort?category=${params.type}`,
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setCategory(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // didmount
   useEffect(() => {
-        axios
-      .get(
-        `${baseURL}/vehicle/sort?category=${params.type}`
-      )
-      .then((res) => {
-        setCategory(res.data.data);
-      })
-      .catch((err) => {
-        console.log("🚀 ~ file: detail.jsx ~ line 16 ~ axios.get ~ err", err);
-      });
-    } , []);
+    getType();
+  }, []);
 
   return (
     <>
@@ -139,4 +150,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withAuth(Type);
