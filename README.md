@@ -1,70 +1,85 @@
-# Getting Started with Create React App
+<h1 align="center">Vehicle Rental App</h1>
+<p align="center"><img src="https://res.cloudinary.com/dsifbeghc/image/upload/v1658211808/products/logo_mgsftd.png" alt="Logo.jpg" /></p>
+<p align="center">
+    <a href="https://my-vehicle-rental.netlify.app/" target="blank">View Demo</a>
+</p>
+  
+  <div align="center">
+    <table>
+  <tr>
+    <th>
+      <img src="https://res.cloudinary.com/dsifbeghc/image/upload/v1658210793/products/page_login_ck3lgb.png" width="400px" alt="Arkademylogo.svg" />
+        <p align="center">Login Page</p>
+    </th>
+    <th>
+      <img src="https://res.cloudinary.com/dsifbeghc/image/upload/v1658210789/products/page_vehicle_bjpvie.png" width="400px" alt="Arkademylogo.svg" />
+        <p align="center">Vehicle Page</p>
+    </th>
+  </tr>
+ <tr>
+    <th>
+      <img src="https://res.cloudinary.com/dsifbeghc/image/upload/v1658210795/products/Homepage_zuygno.png" width="400px" alt="Arkademylogo.svg" />
+        <p align="center">Home Page</p>
+    </th>
+    <th>
+      <img src="https://res.cloudinary.com/dsifbeghc/image/upload/v1658210781/products/page_detail_wgq9m0.png" width="400px" alt="Arkademylogo.svg" />
+        <p align="center">Detail Page</p>
+    </th>
+  </tr>
+</table>
+  </div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Built With
 
-## Available Scripts
+[![React.js](https://img.shields.io/badge/React.js-18.x-orange.svg?style=rounded-square)](https://reactjs.org/)
+[![Golang](https://img.shields.io/badge/Golang-v.1.18-blue.svg?style=rounded-square)](https://golang.org/)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-v4.6.x-blue)](https://github.com/react-bootstrap/react-bootstrap)
 
-In the project directory, you can run:
 
-### `npm start`
+## Description about project
+Vehicle-Rental App is an application of vehicle rental systems such as cars, motorbikes, and bicycles. Users can search vehicles by name and location, filter vehicles based on price, location and category of vehicles. In addition, users can also see the details of the vehicle to be rented. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Feature
+- Authentication users with JWT
+- CRUD Vehicle
+## Installation Steps
 
-### `npm test`
+1. Clone the repository
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   ```bash
+    git clone https://github.com/Irsad99/FrontEnd-Vehicle.git (HTTPS)
+    git clone git@github.com:Irsad99/FrontEnd-Vehicle.git (SSH)
+    ```
 
-### `npm run build`
+2. Install dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   ```bash
+   npm install
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Add .env file at root folder project
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```sh
+   REACT_APP_BASE_URL = [Backend API]
+   ```
 
-### `npm run eject`
+4. Run the app
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   ```bash
+   npm start
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. You are all set!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   ```bash
+   View the website at: http://localhost:3000
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Backend Repository
+Backend API : Vehicle-Rental - Backend [here](https://github.com/Irsad99/Backend-Vehicle-Rental/tree/master)
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+© [Moh. Irsad](https://github.com/Irsad99/)
